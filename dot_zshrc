@@ -1,0 +1,68 @@
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# ========== Homebrew mirror for China ==========
+export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+
+# ========== Oh My Zsh ==========
+export ZSH="$HOME/.oh-my-zsh"
+# ZSH_THEME="catppuccin" # classic | catppuccin
+# Add wisely, as too many plugins slow down shell startup.
+# plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
+
+# ========== Shell Completions ==========
+fpath=("$HOME/.zsh/completions" $fpath)
+autoload -Uz compinit && compinit
+
+
+# ========== Yazi ==========
+export EDITOR=subl
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+  rm -f -- "$tmp"
+}
+
+
+# ========== ripgrep + fzf ==========
+rgf() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: rgf <pattern> [rg options...]" >&2
+    return 1
+  fi
+  local pattern="$1"
+  shift
+  local rg_args_str
+  printf -v rg_args_str '%q ' "$@"
+  rg -l "$pattern" "$@" | fzf --preview "rg -n --color=always -C 3 \"$pattern\" $rg_args_str {}"
+}
+
+
+# ========== Setup ==========
+eval "$(fnm env --shell zsh)" # --use-on-cd
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+
+
+# ========== alias ==========
+alias g="lazygit"
+alias ss="starship"
+alias cat="bat"
+alias agb="agent-browser"
+alias nls="time npm ls -g --depth=0"
+alias findDS="fd -IHg '**/.DS_Store'"
+alias cleanDS="fd -IHg '**/.DS_Store' -X rm"
+alias nosleep="caffeinate -t 3600" # One Hour
+alias ip="curl ifconfig.me"
+
+
+# ========== Private Settings 👇 ==========
+
+
+# ========== EOF ==========
