@@ -1,0 +1,27 @@
+# ====== Theme ======
+theme = Catppuccin Mocha
+
+
+# ====== Font ======
+# font-family = FiraCode Nerd Font
+# font-family = Sarasa Mono SC
+font-size = 16
+font-feature = -calt # Disable Ligature
+font-thicken = true
+adjust-cell-height = 2
+
+
+# ====== Window ======
+background-opacity = 0.9
+background-blur-radius = 20
+window-theme = dark
+
+
+# ====== Secure ======
+clipboard-paste-protection = true
+clipboard-paste-bracketed-safe = true
+
+
+# ====== Keybinding ======
+keybind = cmd+right=new_split:right
+keybind = cmd+down=new_split:down
