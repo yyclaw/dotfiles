@@ -64,6 +64,7 @@ ignore-globs:
   - ".git"
   - "node_modules"
   - "!antsec-*"
+  - "!aspect*"
 
 # == Indicators ==
 # Whether to add indicator characters to certain listed files.
