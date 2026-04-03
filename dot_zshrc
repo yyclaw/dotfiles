@@ -60,6 +60,9 @@ alias findDS="fd -IHg '**/.DS_Store'"
 alias cleanDS="fd -IHg '**/.DS_Store' -X rm"
 alias nosleep="caffeinate -t 3600" # One Hour
 alias ip="curl ifconfig.me"
+alias l="lsd"
+alias ll="lsd -A"
+alias la="lsd -lA --git"
 
 
 # ========== Private Settings 👇 ==========
