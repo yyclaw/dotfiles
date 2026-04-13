@@ -2,9 +2,10 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.utoo-proxy:$PATH"
 
-# ========== Homebrew mirror for China ==========
+# ========== Mirrors ==========
+export ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
 export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
-# export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 
 # ========== Shell Completions ==========
@@ -20,9 +21,16 @@ ZSH_THEME="catppuccin" # classic | catppuccin
 source $ZSH/oh-my-zsh.sh
 
 
-# ========== Yazi ==========
+# ========== Setup ==========
+eval "$(fnm env --shell zsh)" # --use-on-cd
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+
+
+# ========== Uitls ==========
+# yazi
 export EDITOR=subl
-function y() {
+y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="$tmp"
   IFS= read -r -d '' cwd < "$tmp"
@@ -30,29 +38,46 @@ function y() {
   rm -f -- "$tmp"
 }
 
-
-# ========== ripgrep + fzf ==========
+# ripgrep + fzf
 rgf() {
-  if [ $# -eq 0 ]; then
-    echo "Usage: rgf <pattern> [rg options...]" >&2
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: rgf <string> [rg options...]" >&2
     return 1
   fi
-  local pattern="$1"
+
+  local string="$1"
   shift
-  local rg_args_str
-  printf -v rg_args_str '%q ' "$@"
-  rg -l "$pattern" "$@" | fzf --preview "rg -n --color=always -C 3 \"$pattern\" $rg_args_str {}"
+
+  # -F, --fixed-strings   Treat all patterns as literals.
+  rg -l -F "$string" "$@" | fzf \
+    --preview "rg -n --color=always -C 3 -F -- '$string' {}" \
+    --preview-window="right:60%:wrap" \
+    --bind "ctrl-/:toggle-preview" \
+    --header="Ctrl-/ to toggle preview" \
+    --delimiter=":" \
+    --with-nth=1
+}
+
+# geolocation
+geo() {
+  local ip="$1"
+  if [[ -z "$ip" ]]; then
+    ip="$(curl -s https://ifconfig.co/ip 2>/dev/null)"
+  fi
+  curl -s "http://ip-api.com/json/$ip" | jq .
+}
+
+# nosleep
+nosleep() {
+  local h=${1:-8}
+  local word=$([[ $h > 1 ]] && echo "hours" || echo "hour")
+  printf "System will stay awake for %d %s..." "$h" "$word"
+  caffeinate -t $((h*3600))
 }
 
 
 # ========== Check IP before launching Claude Code ==========
 source "$HOME/.zsh/Check-IP-before-launching-Claude-Code.zsh"
-
-
-# ========== Setup ==========
-eval "$(fnm env --shell zsh)" # --use-on-cd
-eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
 
 
 # ========== Alias ==========
@@ -63,8 +88,7 @@ alias cz="chezmoi"
 alias nls="time npm ls -g --depth=0"
 alias findDS="fd -IHg '**/.DS_Store'"
 alias cleanDS="fd -IHg '**/.DS_Store' -X rm"
-alias nosleep="caffeinate -t 36000" # 10 Hours
-alias ip='curl -s "http://ip-api.com/json/$(curl -s https://ifconfig.co/ip)" | jq .'
+alias ip="curl -s https://ifconfig.co/ip"
 alias l="lsd"
 alias ll="lsd -A"
 alias la="lsd -lA --git"
