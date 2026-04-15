@@ -1,7 +1,32 @@
 {
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(echo:*)",
+      "Bash(curl:*)",
+      "Bash(grep:*)",
+      "Bash(pnpm:*)",
+      "Bash(node:*)",
+      "Bash(git add:*)",
+      "Bash(git diff:*)",
+      "Bash(git commit:*)",
+      "Bash(git status:*)",
+      "Bash(git checkout:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)"
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "zsh ~/.claude/statusline-command.zsh"
   },
-  "autoUpdatesChannel": "latest"
+  "autoUpdatesChannel": "latest",
+  "autoMemoryEnabled": false,
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
 }
