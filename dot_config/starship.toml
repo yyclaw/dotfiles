@@ -12,7 +12,7 @@ $git_branch\
 $git_status\
 
 [](fg:yellow bg:green)\
-$nodejs\
+$docker_context\
 
 [](fg:green bg:sapphire)\
 $battery\
@@ -70,9 +70,9 @@ format = '[$all_status$ahead_behind ]($style)'
 style = 'fg:crust bg:yellow'
 stashed = '⚑'
 
-[nodejs]
-symbol = ''
-format = '[ $symbol $version ]($style)'
+[docker_context]
+symbol = ''
+format = '[ $symbol( $context) ]($style)'
 style = 'fg:crust bg:green'
 
 [battery]
