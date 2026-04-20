@@ -1,21 +1,10 @@
+# Helper: List available commands (also used by completions)
+function __notes_list_commands
+    echo yazi
+    echo fd
+end
+
 function notes --description "Show command cheatsheet with copy-by-index support"
-    # Hidden option: list all available commands (used for completions)
-    if test "$argv[1]" = "--list-commands"
-        echo yazi
-        echo fd
-        return 0
-    end
-
-    # Unified color variables
-    set -l clr_grey    (set_color grey)
-    set -l clr_magenta (set_color magenta)
-    set -l clr_green   (set_color green)
-    set -l clr_normal  (set_color normal)
-
-    set -l cmd $argv[1]
-    set -l index $argv[2]
-    set -l cmds yazi fd
-
     set -l cheatsheet_yazi \
         "Ctrl + a | Select all files" \
         "Tab | Show file information" \
@@ -32,6 +21,18 @@ function notes --description "Show command cheatsheet with copy-by-index support
         "fd -HIt d '.{next,turbo}'" \
         "fd -IHg '**/.DS_Store'" \
         "fd -IHg '**/.DS_Store' -X rm"
+
+    # Unified color variables
+    set -l clr_grey    (set_color grey)
+    set -l clr_green   (set_color green)
+    set -l clr_normal  (set_color normal)
+    set -l clr_magenta (set_color magenta)
+
+    # Setup available commands
+    set -l cmds (__notes_list_commands)
+
+    set -l cmd $argv[1]
+    set -l index $argv[2]
 
     # No arguments: list available commands
     if test -z "$cmd"
@@ -113,4 +114,4 @@ function notes --description "Show command cheatsheet with copy-by-index support
 end
 
 # Dynamic completions: disable file completion, show only command list
-complete -c notes --no-files -a "(notes --list-commands 2>/dev/null)" --description "Show cheatsheet"
+complete -c notes --no-files -a '(__notes_list_commands)' --description "Show cheatsheet"
