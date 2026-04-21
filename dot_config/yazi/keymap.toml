@@ -1,0 +1,4 @@
+[mgr]
+prepend_keymap = [
+  { on = "<Esc>", run = ['shell "killall afplay 2>/dev/null" --orphan', "escape"], desc = "Stop afplay + escape" },
+]

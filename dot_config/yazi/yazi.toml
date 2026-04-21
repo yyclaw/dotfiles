@@ -2,6 +2,16 @@
 ratio = [0, 4, 6]
 linemode = "mtime"
 
+[opener]
+play-audio = [
+  { run = 'afplay "$1"', orphan = true, desc = "Play with afplay" },
+]
+
+[open]
+prepend_rules = [
+  { mime = "audio/*", use = "play-audio" },
+]
+
 [plugin]
 prepend_previewers = [
   # Route all text files through bat; syntax mappings live in ~/.config/bat/config
