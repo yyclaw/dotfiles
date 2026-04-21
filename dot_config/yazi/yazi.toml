@@ -1,3 +1,14 @@
 [mgr]
 ratio = [0, 4, 6]
 linemode = "mtime"
+
+[plugin]
+prepend_previewers = [
+  # Route all text files through bat; syntax mappings live in ~/.config/bat/config
+  { mime = "text/*", run = "bat" },
+
+  # Per-extension fallback:
+  # { url = "*.cheat", run = "bat" },
+  # { url = "*.ghostty", run = "bat" },
+  # { url = "*.zsh-theme", run = "bat" },
+]
