@@ -6,20 +6,21 @@ end
 
 function notes --description "Show command cheatsheet with copy-by-index support"
     set -l cheatsheet_yazi \
-        "Ctrl + a | Select all files" \
-        "Tab | Show file information" \
-        "c | Copy" \
-        "f | Filter files" \
-        "s | Search files by name using fd" \
-        ", | Sort files" \
-        "t | Create a new tab with CWD" \
-        "1, 2, ..., 9 | Switch to the N-th tab" \
-        "[ ] | Switch to the previous/next tab" \
-        "Ctrl + c | Close the current tab"
+        "Ctrl + a       | Select all files" \
+        "Tab            | Show file information" \
+        "c              | Copy" \
+        "f              | Filter files" \
+        "s              | Search files by name using fd" \
+        ",              | Sort files" \
+        "t              | Create a new tab with CWD" \
+        "1, 2, ..., 9   | Switch to the N-th tab" \
+        "[ ]            | Switch to the previous/next tab" \
+        "Ctrl + c       | Close the current tab"
 
     set -l cheatsheet_fd \
-        "fd -HIt d '.{next,turbo}'" \
-        "fd -IHg '**/.DS_Store'" \
+        "fd -IHgt d '.{next,turbo}'             | Cleanup dev cache" \
+        "fd -IHgt d '.{next,turbo}' -X rm -r" \
+        "fd -IHg '**/.DS_Store'                 | Cleanup .DS_Store" \
         "fd -IHg '**/.DS_Store' -X rm"
 
     # Unified color variables
@@ -95,15 +96,29 @@ function notes --description "Show command cheatsheet with copy-by-index support
         return 0
     end
 
-    # No index: display numbered list
-    echo ""
-    set -l i 1
+    # Calculate max width based on the longest cmd_part (capped at 80)
+    set -l max_width 0
+    set -l width_cap 80
     for entry in $entries
         set -l parsed (_parse_entry $entry)
-        printf "  %2d. %s%-25s%s" $i "$clr_magenta" $parsed[1] "$clr_normal"
+        set -l len (string length -- $parsed[1])
+        if test $len -gt $max_width
+            set max_width $len
+        end
+    end
+    if test $max_width -gt $width_cap
+        set max_width $width_cap
+    end
+
+    # No index: display numbered list
+    set -l i 1
+    echo
+    for entry in $entries
+        set -l parsed (_parse_entry $entry)
+        printf "  %2d. %s%-*s%s" $i "$clr_magenta" $max_width $parsed[1] "$clr_normal"
         set -l desc_part $parsed[2]
         if test -n "$desc_part"
-            printf "%s%s" "$clr_grey" $desc_part
+            printf "      %s%s" "$clr_grey" $desc_part
         end
         echo
         set i (math $i + 1)
