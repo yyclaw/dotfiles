@@ -11,6 +11,7 @@ classic: false
 # layout.
 # Possible values: permission, user, group, context, size, date, name, inode, links, git
 blocks:
+  - date
   - size
   - name
 
@@ -33,7 +34,7 @@ color:
 # When "classic" is set, this is set to "date".
 # Possible values: date, locale, relative, '+<date_format>'
 # `date_format` will be a `strftime` formatted value. e.g. `date: '+%d %b %y %X'` will give you a date like this: 17 Jun 21 20:14:55
-date: date
+date: relative
 
 # == Dereference ==
 # Whether to dereference symbolic links.
