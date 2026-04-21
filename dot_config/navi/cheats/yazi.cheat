@@ -1,0 +1,14 @@
+% yazi
+
+# Show yazi keyboard shortcuts
+printf '    \033[35m%-15s\033[0m    \033[90m%s\033[0m\n' \
+    'Ctrl + a'     'Select all files' \
+    'Tab'          'Show file information' \
+    'c'            'Copy' \
+    'f'            'Filter files' \
+    's'            'Search files by name using fd' \
+    ','            'Sort files' \
+    't'            'Create a new tab with CWD' \
+    '1, 2, ..., 9' 'Switch to the N-th tab' \
+    '[ ]'          'Switch to the previous/next tab' \
+    'Ctrl + c'     'Close the current tab' \

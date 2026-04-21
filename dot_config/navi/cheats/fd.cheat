@@ -1,0 +1,13 @@
+% fd
+
+# Find dev cache
+fd -IHgt d '.{next,turbo}'
+
+# Remove dev cache
+fd -IHgt d '.{next,turbo}' -X rm -r
+
+# Find .DS_Store
+fd -IHg '**/.DS_Store'
+
+# Remove .DS_Store
+fd -IHg '**/.DS_Store' -X rm

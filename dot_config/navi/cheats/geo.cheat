@@ -1,0 +1,14 @@
+% geo
+
+# Query Geolocation
+curl -s "http://ip-api.com/json/<ip>" | jq .
+
+$ ip: echo --- \
+	--fzf-overrides \
+	' \
+		--print-query \
+		--no-select-1 \
+		--height=9 \
+		--header="Press Enter, or enter an IP address." \
+		--prompt="🔎 IP: " \
+	'

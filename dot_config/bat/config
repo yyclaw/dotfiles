@@ -25,3 +25,4 @@
 #--map-syntax ".ignore:Git Ignore"
 --map-syntax "*.ghostty:Zsh"
 --map-syntax "*.zsh-theme:Zsh"
+--map-syntax "*.cheat:Zsh"

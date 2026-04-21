@@ -1,0 +1,7 @@
+cheats:
+  paths: 
+    - ~/.config/navi/cheats
+
+finder:
+  command: fzf
+  overrides: --height 15
