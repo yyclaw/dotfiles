@@ -4,10 +4,14 @@
       "Read",
       "Glob",
       "Grep",
+      "Bash(ls:*)",
+      "Bash(find:*)",
       "Bash(echo:*)",
       "Bash(curl:*)",
       "Bash(grep:*)",
       "Bash(pnpm:*)",
+      "Bash(ut:*)",
+      "Bash(utx:*)",
       "Bash(node:*)",
       "Bash(git add:*)",
       "Bash(git diff:*)",
@@ -18,14 +22,15 @@
     "deny": [
       "Bash(rm -rf *)",
       "Bash(git push --force *)"
-    ]
+    ],
+    "defaultMode": "acceptEdits"
   },
   "statusLine": {
     "type": "command",
     "command": "zsh ~/.claude/statusline-command.zsh"
   },
+  "effortLevel": "high",
   "autoUpdatesChannel": "latest",
-  "autoMemoryEnabled": false,
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   }
