@@ -1,0 +1,4 @@
+% chezmoi
+
+# Print the difference between local and GitHub
+chezmoi diff --include=files | delta
