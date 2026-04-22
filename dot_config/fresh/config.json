@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "theme": "nord",
+  "file_explorer": {
+    "show_hidden": true,
+    "show_gitignored": true
+  },
+  "keybindings": [
+    {
+      "key": "s",
+      "modifiers": [
+        "super"
+      ],
+      "action": "save",
+      "when": "normal"
+    },
+    {
+      "key": "c",
+      "modifiers": [
+        "super"
+      ],
+      "action": "copy",
+      "when": "normal"
+    },
+    {
+      "key": "x",
+      "modifiers": [
+        "super"
+      ],
+      "action": "cut",
+      "when": "normal"
+    },
+    {
+      "key": "z",
+      "modifiers": [
+        "super"
+      ],
+      "action": "undo",
+      "when": "normal"
+    },
+    {
+      "key": "z",
+      "modifiers": [
+        "shift",
+        "super"
+      ],
+      "action": "redo",
+      "when": "normal"
+    },
+    {
+      "key": "d",
+      "modifiers": [
+        "shift"
+      ],
+      "action": "close_tab",
+      "when": "normal"
+    },
+    {
+      "key": "f",
+      "modifiers": [
+        "shift"
+      ],
+      "action": "query_replace",
+      "when": "normal"
+    }
+  ]
+}
