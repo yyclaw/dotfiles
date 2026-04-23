@@ -4,7 +4,7 @@ linemode = "mtime"
 
 [opener]
 play-audio = [
-  { run = 'afplay "$1"', orphan = true, desc = "Play with afplay" },
+  { run = 'killall afplay 2>/dev/null; afplay "$1"', orphan = true, desc = "Play with afplay" },
 ]
 
 [open]
