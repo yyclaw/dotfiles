@@ -1,5 +1,5 @@
 [mgr]
-ratio = [0, 4, 6]
+# ratio = [0, 4, 6]
 linemode = "mtime"
 
 [opener]
@@ -14,8 +14,8 @@ prepend_rules = [
 
 [plugin]
 prepend_previewers = [
-  # Route all text/application files through bat
+  # Render files with the following MIME types using Bat
   # Syntax mappings live in ~/.config/bat/config
   { mime = "text/*", run = "bat" },
-  { mime = "application/*", run = "bat" },
+  { mime = "application/json", run = "bat" },
 ]

@@ -40,9 +40,10 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd compose_git_info
 add-zsh-hook precmd compose_battery_info
 
-# # Expand variables and commands in PROMPT/RPROMPT variables.
-# # Already been set up in oh-my-zsh.
-# setopt prompt_subst
+# Expand variables and commands in PROMPT/RPROMPT variables.
+# If you have oh-my-zsh installed, this setting is already there, so
+# this line can be commented out.
+setopt prompt_subst
 
 PROMPT='
 🧑🏻‍💻 %F{008}in (%F{006}%~%F{008})  $PROMPT_GIT_INFO
