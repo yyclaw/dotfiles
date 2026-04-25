@@ -14,11 +14,8 @@ prepend_rules = [
 
 [plugin]
 prepend_previewers = [
-  # Route all text files through bat; syntax mappings live in ~/.config/bat/config
+  # Route all text/application files through bat
+  # Syntax mappings live in ~/.config/bat/config
   { mime = "text/*", run = "bat" },
-
-  # Per-extension fallback:
-  # { url = "*.cheat", run = "bat" },
-  # { url = "*.ghostty", run = "bat" },
-  # { url = "*.zsh-theme", run = "bat" },
+  { mime = "application/*", run = "bat" },
 ]
