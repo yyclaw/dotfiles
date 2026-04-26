@@ -1,5 +1,5 @@
 [mgr]
-# ratio = [0, 4, 6]
+ratio = [0, 4, 6]
 linemode = "mtime"
 
 [opener]
@@ -13,7 +13,15 @@ prepend_rules = [
 ]
 
 [plugin]
+prepend_preloaders = [
+  # Pre-render markdown with Glow once, then peek from the cache on each scroll
+  { url = "*.md", run = "glow" },
+]
+
 prepend_previewers = [
+  # Render markdown files using Glow (must come before text/* to win over bat)
+  { url = "*.md", run = "glow" },
+
   # Render files with the following MIME types using Bat
   # Syntax mappings live in ~/.config/bat/config
   { mime = "text/*", run = "bat" },
