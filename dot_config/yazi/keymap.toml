@@ -1,4 +1,7 @@
 [mgr]
 prepend_keymap = [
   { on = "<Esc>", run = ['shell "killall afplay 2>/dev/null" --orphan', "escape"], desc = "Stop afplay + escape" },
+
+  # Alias 。=> .
+  { on = "。", run = "hidden toggle", desc = "Toggle the visibility of hidden files" },
 ]

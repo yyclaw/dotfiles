@@ -1,24 +1,52 @@
 local M = {}
 
-local PREVIEW_WIDTH = 100
+local function read_glow_config()
+	local home = os.getenv("HOME") or ""
+	local candidates = {
+		home .. "/Library/Preferences/glow/glow.yml",
+		(os.getenv("XDG_CONFIG_HOME") or (home .. "/.config")) .. "/glow/glow.yml",
+	}
+	local style, width
+	for _, path in ipairs(candidates) do
+		local f = io.open(path, "r")
+		if f then
+			for line in f:lines() do
+				if not line:match("^%s*#") then
+					style = style or line:match('^%s*style:%s*"?([^"#%s]+)"?')
+					width = width or line:match('^%s*width:%s*(%d+)')
+				end
+			end
+			f:close()
+			if style or width then break end
+		end
+	end
+	return style, tonumber(width)
+end
+
+local GLOW_STYLE, GLOW_WIDTH = read_glow_config()
 
 local function cache_path(job)
 	local cha = job.file.cha
 	local mtime = cha and cha.mtime or 0
-	local key = ya.hash(string.format("glow:%s:%s:%d", tostring(job.file.url), tostring(mtime), PREVIEW_WIDTH))
+	local key = ya.hash(string.format(
+		"glow:%s:%s:%s:%s",
+		tostring(job.file.url),
+		tostring(mtime),
+		tostring(GLOW_STYLE or ""),
+		tostring(GLOW_WIDTH or "")
+	))
 	local dir = os.getenv("TMPDIR") or "/tmp"
 	return string.format("%syazi-glow-%s", dir:sub(-1) == "/" and dir or dir .. "/", key)
 end
 
 local function render_to_cache(job, path)
+	local args = {}
+	if GLOW_STYLE then table.insert(args, "--style"); table.insert(args, GLOW_STYLE) end
+	if GLOW_WIDTH then table.insert(args, "--width"); table.insert(args, tostring(GLOW_WIDTH)) end
+	table.insert(args, tostring(job.file.url))
+
 	local child = Command("glow")
-		:arg({
-			"--style",
-			"dark",
-			"--width",
-			tostring(PREVIEW_WIDTH),
-			tostring(job.file.url),
-		})
+		:arg(args)
 		:env("CLICOLOR_FORCE", "1")
 		:stdout(Command.PIPED)
 		:stderr(Command.PIPED)
